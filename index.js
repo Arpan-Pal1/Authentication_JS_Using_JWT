@@ -1,5 +1,12 @@
 import app from './app.js'
+import connectDB from './src/database/db.connection.js';
 
-app.listen(8000, ()=>{
-    console.log('server is running on port 8000');
+connectDB()
+.then(()=>{
+    app.listen(8000, ()=>{
+        console.log(`server is running on 8000`)
+    })
+})
+.catch((err)=>{
+    console.log(`DATABASE CONNECTION ERROR`);
 })
