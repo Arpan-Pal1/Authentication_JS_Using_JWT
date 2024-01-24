@@ -7,8 +7,13 @@
 </head>
 <body>
     <h1>This is home page</h1>
-    <a href="#"><button>Login</button></a>
-    <a href="#"><button>Secret Page</button></a>
+    <% if (user == null) { %>
+        <a href="/api/v1/user/login"><button>Login</button></a>
+     
+    <% } else { %>
+        <a href="/api/v1/user/logout"><button>Logout</button></a>
+    <% } %>
+    <a href="/secret"><button>Secret Page</button></a>
 
 </body>
 </html>

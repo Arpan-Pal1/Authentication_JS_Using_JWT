@@ -1,9 +1,14 @@
+import { setuser } from "../service/auth.js"
 import { User } from "../models/user.model.js"
+
 
 // user register controller
 
 const registerForm = async (req, res) =>{
-    res.render('registration')
+    if (req.userid == null) {
+        return res.render('registration')
+    }
+    res.redirect('/')
 }
 
 
@@ -37,8 +42,12 @@ const registerUser = async(req, res) =>{
 
 // user login controler
 
-const loginForm = async (req, res) => {
-    res.render('login')
+const loginForm = async ( req, res) => {
+    if (req.userid == null) {
+        
+        return res.render('login')
+    }
+    res.redirect('/')
 }
 
 const loginUser = async(req, res) => {
@@ -62,8 +71,19 @@ const loginUser = async(req, res) => {
     }
 
     console.log(`USER LOGGED IN SUCCESSFULLY`);
-    res.redirect('/')
+    const token = setuser(user)
+
+    res
+    .cookie('token', token)
+    .redirect('/')
 
 }
 
-export {registerForm, registerUser, loginForm, loginUser}
+
+// logout user
+
+const logoutUser = async (req, res) =>{
+    res.clearCookie('token').redirect('/')
+}
+
+export {registerForm, registerUser, loginForm, loginUser, logoutUser}
